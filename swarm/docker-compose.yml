@@ -1,0 +1,9 @@
+﻿# springcloud集成开始环境部署包括了configserver和eureka等
+version: "3.3"
+services:
+
+ eurekaserver:
+   build: ../springcloud/eureka-server
+ 
+ configserver:
+   build: ../springcloud/config-server

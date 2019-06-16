@@ -1,0 +1,46 @@
+﻿# springcloud集成开始环境部署包括了configserver和eureka等
+version: "3.3"
+services:
+
+ eurekaserver:
+   image: swarm_eurekaserver
+   ports:
+     - "6761:6761"
+     - "6762:6762"
+   environment:
+      SPRING_PROFILES_ACTIVE: development
+      PORT: 6761
+      BG_PORT: 6762
+    
+ configserver:
+   image: swarm_configserver
+   ports:
+     - "6200:6200"
+     - "6201:6201"
+   environment:
+     SPRING_PROFILES_ACTIVE: development
+     PORT: 6200
+     BG_PORT: 6201
+#     MY_IP: 192.168.170.54
+   volumes:
+        - /Users/lind.zhang/github/config_repo:/config_repo
+
+#  service-1:
+#    image: com.lind/service1:0.0.1-SNAPSHOT
+#    ports:
+#      - "7788:7788"
+#      - "17788:17788"
+
+#    environment:
+#      SPRING_PROFILES_ACTIVE: development
+#      MY_IP: 192.168.170.30
+
+# service-2:
+#   image: com.lind/service2:0.0.1-SNAPSHOT
+#   ports:
+#     - "7789:7789"
+#     - "17789:17789"
+
+  #  environment:
+  #    SPRING_PROFILES_ACTIVE: development
+  #    MY_IP: 192.168.170.54

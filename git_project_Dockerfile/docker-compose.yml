@@ -1,0 +1,6 @@
+ version: "3.3"
+
+ services:
+   new:
+     command: git clone https://bfyxzls@sina.com:gemini123//github.com:bfyxzls/eurekaServer.git
+    

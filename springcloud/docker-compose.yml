@@ -1,0 +1,27 @@
+﻿# springcloud集成开始环境部署包括了configserver和eureka等
+version: "3.3"
+services:
+
+ eurekaserver:
+   build: ./eureka-server
+   restart: on-failure
+   ports:
+     - "6761:6761"
+     - "6762:6762"
+   networks:
+     - dev
+ 
+ configserver:
+   build: ./config-server
+   ports:
+     - "6200:6200"
+     - "6201:6201"
+   networks:
+     - dev
+   depends_on:
+     - eurekaserver #依赖服务
+
+networks:
+  dev:
+    driver: bridge
+

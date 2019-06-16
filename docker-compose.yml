@@ -1,0 +1,76 @@
+﻿# 集成开始环境部署包括了mongodb,redis,rabbitmq,mysql等
+version: "3.3"
+services:
+
+  mongo:
+    image: mongo:3.4.10
+    ports:
+      - "27017:27017"
+    networks:
+      - dev
+    volumes:
+      - mongo_data:/data/db
+ 
+  redis:
+    image: redis:3.2-alpine
+    networks:
+      - dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+ 
+  rabbit:
+    image: rabbitmq:3.6.10-management-alpine
+    hostname: rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "61613:61613"
+    networks:
+      - dev
+    environment:
+      RABBITMQ_DEFAULT_VHOST: lind
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+  
+  mysql:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - dev
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: abc123
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+eurekaserver:
+   build: ./eureka-server
+   restart: on-failure
+   ports:
+     - "6761:6761"
+     - "6762:6762"
+   networks:
+     - dev
+ 
+ configserver:
+   build: ./config-server
+   ports:
+     - "6200:6200"
+     - "6201:6201"
+   networks:
+     - dev
+   depends_on:
+     - eurekaserver #依赖服务
+networks:
+  dev:
+    driver: bridge
+
+volumes:
+  redis_data:
+  mongo_data:
+  mysql_data:
+  rabbitmq_data:

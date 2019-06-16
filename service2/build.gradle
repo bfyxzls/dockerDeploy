@@ -1,0 +1,80 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.1.RELEASE'
+	}
+	repositories {
+    mavenLocal()
+
+    maven {
+        name "aliyun1"
+        url 'http://maven.aliyun.com/nexus/content/groups/public'
+    }
+    maven {
+        name "aliyun2"
+        url 'http://maven.aliyun.com/mvn/repository/'
+    }
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'docker'
+
+
+group = 'com.lind'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+
+    maven {
+        name "aliyun1"
+        url 'http://maven.aliyun.com/nexus/content/groups/public'
+    }
+    maven {
+        name "aliyun2"
+        url 'http://maven.aliyun.com/mvn/repository/'
+    }
+	mavenCentral()
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+ext['springCloudVersion'] = 'Greenwich.M3'
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-web',
+                   'org.springframework.boot:spring-boot-starter-actuator'
+    )
+	implementation('org.springframework.cloud:spring-cloud-starter-config')
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+    implementation('org.springframework.cloud:spring-cloud-starter-openfeign')
+
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+task buildDocker(type: Docker, dependsOn: build) {
+    push = false
+    applicationName = jar.baseName
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}
