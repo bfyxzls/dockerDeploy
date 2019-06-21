@@ -10,7 +10,9 @@ services:
      - "6762:6762"
    networks:
      - dev
- 
+   environment:
+     - PORT=6761
+     - BG_PORT=6762  
  configserver:
    build: ./config-server
    ports:
@@ -20,6 +22,9 @@ services:
      - dev
    depends_on:
      - eurekaserver #依赖服务
+   environment:
+     - PORT=6200
+     - BG_PORT=6201
 
 networks:
   dev:
