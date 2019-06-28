@@ -2,7 +2,7 @@
 version: "3.3"
 services:
 
- eurekaserver:
+ eurekaserver1:
    build: ./eureka-server
    restart: on-failure
    ports:
@@ -13,6 +13,23 @@ services:
    environment:
      - PORT=6761
      - BG_PORT=6762  
+     - NAME=eureka1
+     - URL=http://eureka2:6761/eureka #集群地址配置
+
+ eurekaserver2:
+   build: ./eureka-server
+   restart: on-failure
+   ports:
+     - "5761:5761"
+     - "5762:5762"
+   networks:
+     - dev
+   environment:
+     - PORT=5761
+     - BG_PORT=5762  
+     - NAME=eureka2
+     - URL=http://eureka1:6761/eureka #集群地址配置
+
  configserver:
    build: ./config-server
    ports:
@@ -21,7 +38,8 @@ services:
    networks:
      - dev
    depends_on:
-     - eurekaserver #依赖服务
+     - eurekaserver1 #依赖服务
+     - eurekaserver2
    environment:
      - PORT=6200
      - BG_PORT=6201
