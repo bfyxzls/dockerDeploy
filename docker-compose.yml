@@ -47,24 +47,31 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
-eurekaserver:
-   build: ./eureka-server
+  eurekaserver:
+   image: registry.cn-hangzhou.aliyuncs.com/lind/eurekaserver:1.0
    restart: on-failure
    ports:
      - "6761:6761"
      - "6762:6762"
+   environment:
+     - PORT=6761
+     - BG_PORT=6762  
    networks:
      - dev
  
- configserver:
-   build: ./config-server
+  configserver:
+   image: registry.cn-hangzhou.aliyuncs.com/lind/configserver:1.0
    ports:
      - "6200:6200"
      - "6201:6201"
+   environment:
+     - PORT=6200
+     - BG_PORT=6201  
    networks:
      - dev
    depends_on:
      - eurekaserver #依赖服务
+
 networks:
   dev:
     driver: bridge
