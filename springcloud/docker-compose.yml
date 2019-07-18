@@ -35,6 +35,9 @@ services:
    ports:
      - "6200:6200"
      - "6201:6201"
+   volumes:
+     - /Users/lind.zhang/github/config_repo:/config_repo
+     - /Users/lind.zhang/github/dockerDeploy/springcloud/config-server:/config-encrypt
    networks:
      - dev
    depends_on:
