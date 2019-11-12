@@ -1,9 +1,9 @@
-#使用默认的镜像构建
+#使用Dockerfile生成的镜像去构建，带中文分词
 version: '2.2'
 services:
   elasticsearch:
-    image: elasticsearch:6.7.2
-    container_name: elasticsearch
+    image: elasticsearch-with-smartcn:6.7.2
+    container_name: elasticsearch1
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
@@ -19,13 +19,13 @@ services:
     networks:
       - esnet
   elasticsearch2:
-    image: elasticsearch:6.7.2
+    image: elasticsearch-with-smartcn:6.7.2
     container_name: elasticsearch2
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch1"
     ulimits:
       memlock:
         soft: -1
