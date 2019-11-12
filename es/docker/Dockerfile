@@ -5,7 +5,7 @@ FROM elasticsearch:6.7.2
 ENV ES_PLUGINS_PATH /usr/share/elasticsearch/plugins/
 ENV ES_PLUGINS_TEMP_PATH /usr/share/elasticsearch/
 #进入ik分词器文件的目录
-RUN cd $ES_PLUGINS_PATH && mkdir analysis_ik && \
+RUN cd $ES_PLUGINS_PATH && mkdir elasticsearch-ik && \
 
 cd $ES_PLUGINS_TEMP_PATH && \
  
@@ -13,6 +13,8 @@ cd $ES_PLUGINS_TEMP_PATH && \
 wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.7.2/elasticsearch-analysis-ik-6.7.2.zip && \
 
 #解压源码包
-unzip elasticsearch-analysis-ik-6.7.2.zip -d  /usr/share/elasticsearch/plugins/analysis_ik
+unzip elasticsearch-analysis-ik-6.7.2.zip -d  /usr/share/elasticsearch/plugins/elasticsearch-ik && \
+
+chown 999 /usr/share/elasticsearch/
 
 #构建 docker build --no-cache -t elasticsearch-with-smartcn:6.7.2 .
