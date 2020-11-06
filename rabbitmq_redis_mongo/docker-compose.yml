@@ -6,6 +6,7 @@ services:
     image: mongo:3.4.10
     ports:
       - "27017:27017"
+    restart: always
     networks:
       - dev
     volumes:
@@ -13,15 +14,17 @@ services:
  
   redis:
     image: redis:3.2-alpine
-    networks:
-      - dev
     ports:
       - "6379:6379"
+    restart: always
+    networks:
+      - dev
     volumes:
       - redis_data:/data
  
   rabbit:
     image: rabbitmq:3.6.10-management-alpine
+    restart: always
     hostname: rabbit
     ports:
       - "5672:5672"
