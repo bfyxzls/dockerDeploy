@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <mirrors>
+
+
+        <mirror>
+            <id>alimaven</id>
+            <mirrorOf>central</mirrorOf>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
+        </mirror>
+
+       
+        <mirror>
+            <id>repo1</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Human Readable Name for this Mirror.</name>
+            <url>http://repo1.maven.org/maven2/</url>
+        </mirror>
+
+        <mirror>
+            <id>repo2</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Human Readable Name for this Mirror.</name>
+            <url>http://repo2.maven.org/maven2/</url>
+        </mirror>
+    </mirrors>
+
+    <profiles>
+        <profile>
+  
+            <id>dev</id>
+            <repositories>
+                <repository>
+                 <id>maven-public</id>
+<url>http://bdyhip1.pkulaw.cn:2031/repository/maven-public/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                   
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>maven-public</id>
+                    <name>maven-plugin</name>
+                    <url>http://bdyhip1.pkulaw.cn:2031/repository/maven-public/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>dev</activeProfile>
+    </activeProfiles>
+
+    <servers>
+        <server>
+            <id>releases</id>
+            <username>admin</username>
+            <password>admin123</password>
+        </server>
+        <server>
+            <id>snapshots</id>
+            <username>admin</username>
+            <password>admin123</password>
+        </server>
+  	<server>
+            <id>nexus-releases</id>
+            <username>admin</username>
+            <password>admin123</password>
+        </server>
+        <server>
+            <id>nexus-snapshots</id>
+            <username>admin</username>
+            <password>admin123</password>
+        </server>
+        <server>
+            <!-- id对应仓库id，包括profile里repositories和pluginRepository以及pom里distributionManagement的repository，id要唯一�?-->
+            <id>maven-public</id>
+            <username>admin</username>
+            <password>admin123</password>
+        </server>
+
+    </servers>
+</settings>

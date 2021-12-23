@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+ 
+  <localRepository>/mnt/disk/maven_repo</localRepository>
+
+  <pluginGroups>
+  </pluginGroups>
+
+  <proxies>
+  </proxies>
+
+  <servers>
+    <server>  
+		<id>nexus-releases</id>  
+		<username>admin</username>  
+		<password>admin123</password>  
+    </server>  
+    <server>  
+	    <id>nexus-snapshots</id>  
+	    <username>admin</username>  
+	    <password>admin123</password>  
+    </server>
+	<server>
+	    <id>maven-public</id>  
+	    <username>admin</username>  
+	    <password>admin123</password>  
+    </server>
+  </servers>
+
+   <mirrors>
+    <mirror>
+      <id>alimaven</id>
+      <name>aliyun maven</name>
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+  </mirrors>
+  
+  <profiles>
+    <profile>   
+	
+		<id>dev</id>   
+		<repositories>   
+		  <repository>  
+	      <id>maven-public</id>
+	   		<url>http://bdyhip1.pkulaw.cn:2031/repository/maven-public/</url>
+		   	<releases>   
+			  <enabled>true</enabled>   
+			</releases>   
+			<snapshots>   
+			  <enabled>true</enabled>   
+			</snapshots>   
+		  </repository>   
+        </repositories>		
+		<pluginRepositories>
+			<pluginRepository>
+				<id>maven-public</id>
+				<name>maven-plugin</name>
+				<url>http://bdyhip1.pkulaw.cn:2031/repository/maven-public/</url>
+			</pluginRepository>
+		</pluginRepositories>
+    </profile>	
+  </profiles>
+  
+  <activeProfiles>
+    <activeProfile>dev</activeProfile>
+  </activeProfiles>
+</settings>
